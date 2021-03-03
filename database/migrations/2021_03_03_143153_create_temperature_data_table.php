@@ -16,7 +16,7 @@ class CreateTemperatureDataTable extends Migration
         Schema::create('temperature_data', function (Blueprint $table) {
             $table->id();
             $table->dateTime('measurement_time');
-            $table->float('value');
+            $table->float('value', 3, 1);
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
