@@ -40,4 +40,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function parameter() {
+        return $this->hasOne(Parameter::class);
+    }
+
+    public function personalData() {
+        return $this->hasOne(PersonalData::class);
+    }
+
+    public function sleepData() {
+        return $this->hasMany(SleepData::class);
+    }
+
+    public function pulseData() {
+        return $this->hasMany(PulseData::class);
+    }
+
+    public function arterialPressureData() {
+        return $this->hasMany(ArterialPressureData::class);
+    }
+
+    public function temperatureData() {
+        return $this->hasMany(TemperatureData::class);
+    }
 }
