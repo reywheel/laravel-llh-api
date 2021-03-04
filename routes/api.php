@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('parameters', \App\Http\Controllers\ParameterController::class, ['parameters' => ['parameters' => 'user_id']]);
+Route::apiResource('personal-data', \App\Http\Controllers\PersonalDataController::class, ['parameters' => ['personal-data' => 'user_id']]);
+
+
+// TODO:
+// Сделать контроллеры
+// Поставить jwt
