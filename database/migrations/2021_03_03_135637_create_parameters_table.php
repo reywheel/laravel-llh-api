@@ -18,7 +18,7 @@ class CreateParametersTable extends Migration
             $table->enum('gender', ["М", "Ж"]);
             $table->integer('growth');
             $table->integer('weight');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

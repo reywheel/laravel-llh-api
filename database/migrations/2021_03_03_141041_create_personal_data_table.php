@@ -21,7 +21,7 @@ class CreatePersonalDataTable extends Migration
             $table->date('date_of_birth');
             $table->string('address');
             $table->string('policy_number', 16);
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
