@@ -14,14 +14,13 @@ class CreatePersonalDataTable extends Migration
     public function up()
     {
         Schema::create('personal_data', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('user_id')->unique()->primary();
             $table->string('last_name');
             $table->string('first_name');
             $table->string('second_name');
             $table->date('date_of_birth');
             $table->string('address');
             $table->string('policy_number', 16);
-            $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

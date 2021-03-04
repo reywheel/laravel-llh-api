@@ -14,11 +14,10 @@ class CreateParametersTable extends Migration
     public function up()
     {
         Schema::create('parameters', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('user_id')->unique()->primary();
             $table->enum('gender', ["М", "Ж"]);
             $table->integer('growth');
             $table->integer('weight');
-            $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

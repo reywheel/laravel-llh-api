@@ -9,6 +9,12 @@ class PersonalData extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'user_id';
+
+    protected $guarded = [];
+
+    protected $hidden = ['created_at', 'updated_at'];
+
     public function user() {
         return $this->belongsTo(User::class);
     }

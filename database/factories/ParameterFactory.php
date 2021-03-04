@@ -22,10 +22,10 @@ class ParameterFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => 1,
             'gender' => $this->faker->randomElement(['М', 'Ж']),
             'growth' => $this->faker->numberBetween(150, 200),
-            'weight' => $this->faker->numberBetween(50, 120),
-            'user_id' => 1
+            'weight' => $this->faker->numberBetween(50, 120)
         ];
     }
 }

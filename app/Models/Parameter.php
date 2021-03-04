@@ -9,6 +9,8 @@ class Parameter extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'user_id';
+
     protected $fillable = [
         'gender',
         'growth',
