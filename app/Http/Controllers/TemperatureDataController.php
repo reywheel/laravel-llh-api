@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TemperatureData\StoreRequest;
+use App\Http\Requests\TemperatureData\UpdateRequest;
 use App\Models\TemperatureData;
 use Illuminate\Http\Request;
 
@@ -29,16 +31,10 @@ class TemperatureDataController extends Controller
      *
      * done
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validatedFields = $this->validate($request, [
-            'measurement_time' => ['required', 'date'],
-            'value' => ['required', 'numeric'],
-            'user_id' => ['required', 'integer', 'exists:users,id']
-        ]);
-
         $newTemperatureData = new TemperatureData();
-        $newTemperatureData->fill($validatedFields);
+        $newTemperatureData->fill($request->validated());
         $status = $newTemperatureData->save();
 
         return response()->json(['status' => $status], 201);
@@ -66,14 +62,9 @@ class TemperatureDataController extends Controller
      *
      * done
      */
-    public function update(Request $request, TemperatureData $temperatureData)
+    public function update(UpdateRequest $request, TemperatureData $temperatureData)
     {
-        $validatedFields = $this->validate($request, [
-            'measurement_time' => ['date'],
-            'value' => ['numeric'],
-        ]);
-
-        $temperatureData->fill($validatedFields);
+        $temperatureData->fill($request->validated());
         $status = $temperatureData->save();
 
         return response()->json(['status' => $status]);
