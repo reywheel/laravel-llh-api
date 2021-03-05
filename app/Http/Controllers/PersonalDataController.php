@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PersonalData\StoreRequest;
+use App\Http\Requests\PersonalData\UpdateRequest;
 use App\Models\PersonalData;
 use Illuminate\Http\Request;
 
@@ -29,20 +31,10 @@ class PersonalDataController extends Controller
      *
      * done
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validatedFields = $this->validate($request, [
-            'user_id' => ['required', 'integer', 'unique:personal_data', 'exists:users,id'],
-            'last_name' => ['required', 'string'],
-            'first_name' => ['required', 'string'],
-            'second_name' => ['required', 'string'],
-            'date_of_birth' => ['required', 'date'],
-            'address' => ['required', 'string'],
-            'policy_number' => ['required', 'integer', 'unique:personal_data'],
-        ]);
-
         $newPersonalData = new PersonalData();
-        $newPersonalData->fill($validatedFields);
+        $newPersonalData->fill($request->validated());
         $status = $newPersonalData->save();
 
         return response()->json(['status' => $status]);
@@ -70,18 +62,9 @@ class PersonalDataController extends Controller
      *
      * done
      */
-    public function update(Request $request, PersonalData $personalData)
+    public function update(UpdateRequest $request, PersonalData $personalData)
     {
-        $validatedFields = $this->validate($request, [
-            'last_name' => ['string'],
-            'first_name' => ['string'],
-            'second_name' => ['string'],
-            'date_of_birth' => ['date'],
-            'address' => ['string'],
-            'policy_number' => ['integer', 'unique:personal_data'],
-        ]);
-
-        $personalData->fill($validatedFields);
+        $personalData->fill($request->validated());
         $status = $personalData->save();
 
         return response()->json(['status' => $status]);
