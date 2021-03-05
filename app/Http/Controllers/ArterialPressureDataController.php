@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArterialPressureData\StoreRequest;
+use App\Http\Requests\ArterialPressureData\UpdateRequest;
 use App\Models\ArterialPressureData;
 use Illuminate\Http\Request;
 
@@ -29,17 +31,10 @@ class ArterialPressureDataController extends Controller
      *
      * done
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validatedFields = $this->validate($request, [
-            'measurement_time' => ['required', 'date'],
-            'systolic_value' => ['required', 'integer'],
-            'diastolic_value' => ['required', 'integer'],
-            'user_id' => ['required', 'integer', 'exists:users,id']
-        ]);
-
         $newArterialPressureData = new ArterialPressureData();
-        $newArterialPressureData->fill($validatedFields);
+        $newArterialPressureData->fill($request->validated());
         $status = $newArterialPressureData->save();
 
         return response()->json(['status' => $status], 201);
@@ -67,15 +62,9 @@ class ArterialPressureDataController extends Controller
      *
      * done
      */
-    public function update(Request $request, ArterialPressureData $arterialPressureData)
+    public function update(UpdateRequest $request, ArterialPressureData $arterialPressureData)
     {
-        $validatedFields = $this->validate($request, [
-            'measurement_time' => ['date'],
-            'systolic_value' => ['integer'],
-            'diastolic_value' => ['integer'],
-        ]);
-
-        $arterialPressureData->fill($validatedFields);
+        $arterialPressureData->fill($request->validated());
         $status = $arterialPressureData->save();
 
         return response()->json(['status' => $status]);
