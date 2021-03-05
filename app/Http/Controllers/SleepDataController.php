@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SleepData\StoreRequest;
+use App\Http\Requests\SleepData\UpdateRequest;
 use App\Models\SleepData;
 use Illuminate\Http\Request;
 
@@ -29,17 +31,10 @@ class SleepDataController extends Controller
      *
      * done
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validatedFields = $this->validate($request, [
-            'date' => ['required', 'date'],
-            'hours' => ['required', 'integer'],
-            'minutes' => ['required', 'integer'],
-            'user_id' => ['required', 'exists:users,id']
-        ]);
-
         $newSleepData = new SleepData();
-        $newSleepData->fill($validatedFields);
+        $newSleepData->fill($request->validated());
         $status = $newSleepData->save();
 
         return response()->json(['status' => $status]);
@@ -67,15 +62,9 @@ class SleepDataController extends Controller
      *
      * done
      */
-    public function update(Request $request, SleepData $sleepData)
+    public function update(UpdateRequest $request, SleepData $sleepData)
     {
-        $validatedFields = $this->validate($request, [
-            'date' => ['date'],
-            'hours' => ['integer'],
-            'minutes' => ['integer'],
-        ]);
-
-        $sleepData->fill($validatedFields);
+        $sleepData->fill($request->validated());
         $status = $sleepData->save();
 
         return response()->json(['status' => $status]);
