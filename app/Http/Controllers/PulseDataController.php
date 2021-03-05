@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PulseData\StoreRequest;
+use App\Http\Requests\PulseData\UpdateRequest;
 use App\Models\PulseData;
 use Illuminate\Http\Request;
 
@@ -29,16 +31,10 @@ class PulseDataController extends Controller
      *
      * done
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validatedFields = $this->validate($request, [
-            'measurement_time' => ['required', 'date'],
-            'value' => ['required', 'integer'],
-            'user_id' => ['required', 'integer', 'exists:users,id']
-        ]);
-
         $newPulseData = new PulseData();
-        $newPulseData->fill($validatedFields);
+        $newPulseData->fill($request->validated());
         $status = $newPulseData->save();
 
         return response()->json(['status' => $status], 201);
@@ -66,14 +62,9 @@ class PulseDataController extends Controller
      *
      * done
      */
-    public function update(Request $request, PulseData $pulseData)
+    public function update(UpdateRequest $request, PulseData $pulseData)
     {
-        $validatedFields = $this->validate($request, [
-            'measurement_time' => ['date'],
-            'value' => ['integer'],
-        ]);
-
-        $pulseData->fill($validatedFields);
+        $pulseData->fill($request->validated());
         $status = $pulseData->save();
 
         return response()->json(['status' => $status]);
