@@ -9,6 +9,13 @@ class PulseData extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $guarded = [];
+
     public function user() {
         return $this->belongsTo(User::class);
     }
