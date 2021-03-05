@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Parameter\StoreRequest;
+use App\Http\Requests\Parameter\UpdateRequest;
 use App\Models\Parameter;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,17 +32,10 @@ class ParameterController extends Controller
      *
      * done
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $validatedFields = $this->validate($request, [
-           'gender' => ['required', 'string', 'in:М,Ж'],
-            'growth' => ['required', 'integer'],
-            'weight' => ['required', 'integer'],
-            'user_id' => ['required', 'integer', 'unique:parameters', 'exists:users,id']
-        ]);
-
         $newParameter = new Parameter();
-        $newParameter->fill($validatedFields);
+        $newParameter->fill($request->validated());
         $status = $newParameter->save();
 
         return response()->json(['status' => $status]);
@@ -68,15 +63,9 @@ class ParameterController extends Controller
      *
      * done
      */
-    public function update(Request $request, Parameter $parameter)
+    public function update(UpdateRequest $request, Parameter $parameter)
     {
-        $validatedFields = $this->validate($request, [
-            'gender' => ['string', 'in:М,Ж'],
-            'growth' => ['integer'],
-            'weight' => ['integer'],
-        ]);
-
-        $parameter->fill($validatedFields);
+        $parameter->fill($request->validated());
         $status = $parameter->save();
 
         return response()->json(['status' => $status]);
