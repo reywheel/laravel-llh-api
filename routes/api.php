@@ -14,8 +14,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('parameters', \App\Http\Controllers\ParameterController::class, ['parameters' => ['parameters' => 'user_id']]);
-Route::apiResource('personal-data', \App\Http\Controllers\PersonalDataController::class, ['parameters' => ['personal-data' => 'user_id']]);
+Route::apiResource('arterial-pressure-data', \App\Http\Controllers\ArterialPressureDataController::class)
+    ->parameter('arterial-pressure-data', 'arterial_pressure_data')
+    ->whereNumber('arterial_pressure_data');
+
+Route::apiResource('parameters', \App\Http\Controllers\ParameterController::class)
+    ->whereNumber('parameter');
+
+Route::apiResource('personal-data', \App\Http\Controllers\PersonalDataController::class)
+    ->parameter('personal-data', 'personal_data')
+    ->whereNumber('personal_data');
+
+Route::apiResource('pulse-data', \App\Http\Controllers\PulseDataController::class)
+    ->parameter('pulse-data', 'pulse_data')
+    ->whereNumber('pulse_data');
+
+Route::apiResource('sleep-data', \App\Http\Controllers\SleepDataController::class)
+    ->parameter('sleep-data', 'sleep_data')
+    ->whereNumber('sleep_data');
+
+Route::apiResource('temperature-data', \App\Http\Controllers\TemperatureDataController::class)
+    ->parameter('temperature-data', 'temperature_data')
+    ->whereNumber('temperature_data');
 
 
 // TODO:
