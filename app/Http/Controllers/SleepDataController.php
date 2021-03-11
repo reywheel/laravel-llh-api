@@ -18,7 +18,7 @@ class SleepDataController extends Controller
      */
     public function index()
     {
-        $sleepData = SleepData::all();
+        $sleepData = SleepData::orderBy('date', 'asc')->get();
 
         return response()->json($sleepData);
     }

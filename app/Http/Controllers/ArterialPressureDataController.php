@@ -18,7 +18,7 @@ class ArterialPressureDataController extends Controller
      */
     public function index()
     {
-        $arterialPressureData = ArterialPressureData::all();
+        $arterialPressureData = ArterialPressureData::orderBy('measurement_time', 'asc')->get();
 
         return response()->json($arterialPressureData);
     }

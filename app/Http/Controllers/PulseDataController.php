@@ -18,7 +18,7 @@ class PulseDataController extends Controller
      */
     public function index()
     {
-        $pulseData = PulseData::all();
+        $pulseData = PulseData::orderBy('measurement_time', 'asc')->get();
 
         return response()->json($pulseData);
     }

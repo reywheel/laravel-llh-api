@@ -18,7 +18,7 @@ class TemperatureDataController extends Controller
      */
     public function index()
     {
-        $temperatureData = TemperatureData::all();
+        $temperatureData = TemperatureData::orderBy('measurement_time', 'asc')->get();
 
         return response()->json($temperatureData);
     }
